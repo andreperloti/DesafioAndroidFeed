@@ -54,7 +54,6 @@ public class FeedActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         int positionCurrent = getPositionCurrent();
-        TNUtil.toastLong("Position current: " + positionCurrent);
         if (positionCurrent > -1) {
             adapter.notifyItemRangeChanged(positionCurrent - 1, 3);
         }
@@ -65,16 +64,19 @@ public class FeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
         ButterKnife.bind(this);
-//        callbackRequestFeedFeed.bindEE();
+        setupCallbackRequest();
+        bindSwipeRefresh();
+        bindRecycrerViewFeed();
+        downloadFeed();
+    }
+
+    private void setupCallbackRequest() {
         cb = new CallbackRequestUtil(this, new CallbackRequestUtil.MyListener() {
             @Override
             public void onClick() {
                 downloadFeed();
             }
         }).getCallbackRequestTN();
-        bindSwipeRefresh();
-        bindRecycrerViewFeed();
-        downloadFeed();
     }
 
     public int getWidthLayout() {
@@ -159,11 +161,6 @@ public class FeedActivity extends AppCompatActivity {
         p++;
         long t = JsonUtil.getLong(linkedTreeMapFeed, "t", 0);
 
-        Log.e(TNUtil.TNREQUEST, " -------------------------------------- ");
-        Log.e(TNUtil.TNREQUEST, "P: " + p);
-        Log.e(TNUtil.TNREQUEST, "T: " + t);
-        Log.e(TNUtil.TNREQUEST, " -------------------------------------- ");
-
         ClienteAPI.MyRetrofit.getInstance().getFeed(String.valueOf(p), String.valueOf(t))
                 .enqueue(new Callback<LinkedTreeMap>() {
                     @Override
@@ -189,10 +186,8 @@ public class FeedActivity extends AppCompatActivity {
 
     }
 
-
     private void reload() {
         downloadFeed();
     }
-
 
 }

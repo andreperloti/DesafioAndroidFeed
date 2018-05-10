@@ -70,18 +70,18 @@ public class ProfileDetailActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initIdProfile();
         bindRecyclerView();
-
         bindSwipeRefresh();
-
-         cb = new CallbackRequestUtil(this, new CallbackRequestUtil.MyListener() {
-            @Override
-            public void onClick() {
-                downloadProfile();
-            }
-        }).getCallbackRequestTN();
-
-
+        setupCallbackRequest();
         downloadProfile();
+    }
+
+    private void setupCallbackRequest() {
+        cb = new CallbackRequestUtil(this, new CallbackRequestUtil.MyListener() {
+           @Override
+           public void onClick() {
+               downloadProfile();
+           }
+       }).getCallbackRequestTN();
     }
 
     private void initIdProfile() {
@@ -185,17 +185,9 @@ public class ProfileDetailActivity extends AppCompatActivity {
     }
 
     private void updateMeals() {
-        Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
-
         long p = JsonUtil.getLong(linkedTreeMapProfile, "p", 0);
         p++;
         long t = JsonUtil.getLong(linkedTreeMapProfile, "t", 0);
-
-        Log.e(TNUtil.TNREQUEST, " -------------------------------------- ");
-        Log.e(TNUtil.TNREQUEST, "PERFIL P: " + p);
-        Log.e(TNUtil.TNREQUEST, "PERFIL T: " + t);
-        Log.e(TNUtil.TNREQUEST, " -------------------------------------- ");
-
         ClienteAPI.MyRetrofit.getInstance().getProfile(id_profile, String.valueOf(p), String.valueOf(t))
                 .enqueue(new Callback<LinkedTreeMap>() {
                     @Override
@@ -204,7 +196,7 @@ public class ProfileDetailActivity extends AppCompatActivity {
                         Log.e(TNUtil.TNREQUEST, "StatusCode: " + statusCode);
                         if (statusCode == 200) {
                             linkedTreeMapProfile = response.body();
-                            ArrayList<LinkedTreeMap> linkedTreeMapItems = (ArrayList<LinkedTreeMap>) linkedTreeMapProfile.get("items");
+                            ArrayList<LinkedTreeMap> linkedTreeMapItems = (ArrayList<LinkedTreeMap>) JsonUtil.getList(linkedTreeMapProfile,"items");
                             adapter.addAll(linkedTreeMapItems);
                         }
                     }
@@ -221,9 +213,6 @@ public class ProfileDetailActivity extends AppCompatActivity {
         finish();
         return true;
     }
-
-
-
 
 
 }

@@ -20,6 +20,7 @@
     <string name="total_consumido">Total consumido</string>
     <string name="error_try_again_later">Erro, tente novamente mais tarde!</string>
     <string name="no_results_for_filter">Nenhum resultado para esse filtro.</string>
+    <string name="error_loading_image">Erro ao carregar a imagem</string>
 
 
 </resources>

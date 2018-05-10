@@ -74,7 +74,6 @@ public class ProfileDetailAdapter extends RecyclerView.Adapter<ProfileDetailAdap
         }
 
         void render(LinkedTreeMap meal) {
-            final String id = meal.get("id").toString();
             final String feedHash = meal.get("feedHash").toString();
 
             Picasso.with(context).load(meal.get("image").toString())
@@ -88,7 +87,7 @@ public class ProfileDetailAdapter extends RecyclerView.Adapter<ProfileDetailAdap
 
                         @Override
                         public void onError() {
-                            imageViewMeal.setContentDescription("Erro");
+                            imageViewMeal.setContentDescription(context.getString(R.string.error_loading_image));
                             if (progressBarImageMeal != null)
                                 progressBarImageMeal.setVisibility(View.GONE);
                         }

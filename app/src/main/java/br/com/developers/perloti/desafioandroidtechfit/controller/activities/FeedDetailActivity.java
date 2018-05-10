@@ -1,6 +1,5 @@
 package br.com.developers.perloti.desafioandroidtechfit.controller.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,9 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -26,6 +23,7 @@ import java.util.Date;
 
 import br.com.developers.perloti.desafioandroidtechfit.R;
 import br.com.developers.perloti.desafioandroidtechfit.controller.adapter.DetailFeedAdapter;
+import br.com.developers.perloti.desafioandroidtechfit.controller.api.ClienteAPI;
 import br.com.developers.perloti.desafioandroidtechfit.model.Like;
 import br.com.developers.perloti.desafioandroidtechfit.model.LikeRepository;
 import br.com.developers.perloti.desafioandroidtechfit.model.Meal;
@@ -33,7 +31,6 @@ import br.com.developers.perloti.desafioandroidtechfit.util.ApplicationUtil;
 import br.com.developers.perloti.desafioandroidtechfit.util.CallbackRequestTN;
 import br.com.developers.perloti.desafioandroidtechfit.util.CallbackRequestUtil;
 import br.com.developers.perloti.desafioandroidtechfit.util.CircleTransform;
-import br.com.developers.perloti.desafioandroidtechfit.controller.api.ClienteAPI;
 import br.com.developers.perloti.desafioandroidtechfit.util.DateUtil;
 import br.com.developers.perloti.desafioandroidtechfit.util.JsonUtil;
 import br.com.developers.perloti.desafioandroidtechfit.util.TNUtil;
@@ -98,14 +95,17 @@ public class FeedDetailActivity extends AppCompatActivity {
         bindRecycrerView();
         bindSwipeRefresh();
 
+        setupCallbackRequest();
+        downloadDetail();
+    }
+
+    private void setupCallbackRequest() {
         cb = new CallbackRequestUtil(this, new CallbackRequestUtil.MyListener() {
             @Override
             public void onClick() {
                 downloadDetail();
             }
         }).getCallbackRequestTN();
-
-        downloadDetail();
     }
 
     private void bindViewLike() {

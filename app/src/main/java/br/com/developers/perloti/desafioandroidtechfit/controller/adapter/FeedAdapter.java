@@ -39,8 +39,8 @@ import butterknife.ButterKnife;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Holder> {
 
-    List<LinkedTreeMap> linkedTreeMapItems = new ArrayList<>();
-    Context context;
+    private List<LinkedTreeMap> linkedTreeMapItems = new ArrayList<>();
+    private Context context;
 
     public FeedAdapter(Context context, List<LinkedTreeMap> linkedTreeMapItems) {
         this.context = context;
@@ -55,7 +55,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Holder> {
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-
         holder.render(linkedTreeMapItems.get(position));
     }
 
@@ -89,18 +88,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Holder> {
         ImageView imageViewProfile;
         @BindView(R.id.progressBar)
         ProgressBar progressBarImageMeal;
-
         @BindView(R.id.view_click_like)
         RelativeLayout viewClickLike;
         @BindView(R.id.image_view_like)
         ImageView imageViewLike;
 
-
         Holder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
-
         }
 
         void render(LinkedTreeMap item) {
@@ -114,9 +109,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Holder> {
 
 
             Meal meal = Meal.getMeal(JsonUtil.getInt(item, "meal", 0));
-
             String itemMealDate = meal + " " + ApplicationUtil.getContext().getString(R.string.of) + " " + DateUtil.dateToStringMask(date);
-
             textViewName.setText(nameProfile == null ? "" : nameProfile);
             textViewGoal.setText(goalProfile == null ? "" : goalProfile);
             if (energy != 0) {
@@ -203,11 +196,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Holder> {
                     Intent intent = new Intent(context, FeedDetailActivity.class);
                     intent.putExtra(TNUtil.KEY_FEEDHASH, String.valueOf(feedHash));
                     context.startActivity(intent);
-
-
                 }
             });
-
 
         }
     }

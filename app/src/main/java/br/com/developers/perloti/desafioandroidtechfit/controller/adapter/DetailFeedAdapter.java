@@ -22,8 +22,8 @@ import butterknife.ButterKnife;
 
 public class DetailFeedAdapter extends RecyclerView.Adapter<DetailFeedAdapter.Holder> {
 
-    Context context;
-    ArrayList<LinkedTreeMap> linkedTreeMapItems = new ArrayList<>();
+    private Context context;
+    private ArrayList<LinkedTreeMap> linkedTreeMapItems = new ArrayList<>();
 
     public DetailFeedAdapter(Context context, ArrayList<LinkedTreeMap> linkedTreeMapItems) {
         this.context = context;
@@ -66,7 +66,7 @@ public class DetailFeedAdapter extends RecyclerView.Adapter<DetailFeedAdapter.Ho
 
         }
 
-        public void render(LinkedTreeMap item) {
+        void render(LinkedTreeMap item) {
             String description = JsonUtil.getString(item, "description");
             textViewNameFood.setText(description);
 
@@ -74,7 +74,6 @@ public class DetailFeedAdapter extends RecyclerView.Adapter<DetailFeedAdapter.Ho
             String measure = JsonUtil.getString(item, "measure");
             float weight = JsonUtil.getFloat(item, "weight", 0);
             textViewUnits.setText(amount + " " + measure + " (" + weight + context.getString(R.string.g) + ")");
-
 
             float energy = JsonUtil.getFloat(item, "energy", 0);
             textViewCal.setText(String.format("%.0f" + context.getString(R.string.kcal), energy));
@@ -84,8 +83,6 @@ public class DetailFeedAdapter extends RecyclerView.Adapter<DetailFeedAdapter.Ho
             textViewGord.setText(String.format("%.0f" + context.getString(R.string.g), fat));
             float protein = JsonUtil.getFloat(item, "protein", 0);
             textViewProt.setText(String.format("%.0f" + context.getString(R.string.g), protein));
-
-
         }
     }
 
