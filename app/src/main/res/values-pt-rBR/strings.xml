@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Feed Tecnonutri</string>
+
+    <string name="meal_0">Café da Manhã</string>
+    <string name="meal_1">Lanche da Manhã</string>
+    <string name="meal_2">Almoço</string>
+    <string name="meal_3">Lanche da Tarde</string>
+    <string name="meal_4">Jantar</string>
+    <string name="meal_5">Ceia</string>
+    <string name="meal_6">Pré-Treino</string>
+    <string name="meal_7">Pós-Treino</string>
+
+    <string name="of">de</string>
+    <string name="date_mask">dd/MM/yyyy</string>
+    <string name="kcal">Kcal</string>
+    <string name="profile">Perfil</string>
+    <string name="detail">Detalhes</string>
+    <string name="cal">cal</string>
+    <string name="error_try_again_later">Erro, tente novamente mais tarde!</string>
+</resources>
