@@ -24,18 +24,13 @@ public interface ClienteAPI {
     Call<LinkedTreeMap> getFeed();
 
     @GET("feed")
-    Call<LinkedTreeMap> getFeed(@Query("p") String p,
-                                      @Query("t") String t);
-
+    Call<LinkedTreeMap> getFeed(@Query("p") String p, @Query("t") String t);
 
     @GET("profile/{id}")
     Call<LinkedTreeMap> getProfile(@Path("id") String id);
 
-
     @GET("profile/{id}")
-    Call<LinkedTreeMap> getProfile(@Path("id") String id,
-                                   @Query("p") String p,
-                                   @Query("t") String t);
+    Call<LinkedTreeMap> getProfile(@Path("id") String id, @Query("p") String p, @Query("t") String t);
 
     @GET("feed/{feedHash}")
     Call<LinkedTreeMap> getDetailPost(@Path("feedHash") String id);
@@ -44,7 +39,6 @@ public interface ClienteAPI {
         private static String BASE_URL = "http://api.tecnonutri.com.br/api/v4/";
 
         public static ClienteAPI getInstance() {
-
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -53,16 +47,6 @@ public interface ClienteAPI {
             httpClient .connectTimeout(10, TimeUnit.SECONDS)
                     .writeTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(30, TimeUnit.SECONDS);
-//            httpClient.addInterceptor(new Interceptor() {
-//                @Override
-//                public Response intercept(Chain chain) throws IOException {
-//                    Request original = chain.request();
-//                    Request request = original.newBuilder()
-//                            .method(original.method(), original.body())
-//                            .build();
-//                    return chain.proceed(request);
-//                }
-//            });
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(gson))

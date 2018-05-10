@@ -43,7 +43,7 @@ public class CallbackRequestUtil {
     private CallbackRequestTN callbackRequest = new CallbackRequestTN() {
         @Override
         public void empty() {
-            Log.e(TNUtil.TNREQUEST, "Empty ");
+            Log.e(TNUtil.TN, "list empty");
             viewEE.setVisibility(View.VISIBLE);
             buttonEE.setVisibility(View.VISIBLE);
             textViewEE.setVisibility(View.VISIBLE);
@@ -54,7 +54,7 @@ public class CallbackRequestUtil {
 
         @Override
         public void error() {
-            Log.e(TNUtil.TNREQUEST, "Error");
+            Log.e(TNUtil.TN, "erro loading list");
             viewEE.setVisibility(View.VISIBLE);
             buttonEE.setVisibility(View.VISIBLE);
             textViewEE.setVisibility(View.VISIBLE);
@@ -65,7 +65,7 @@ public class CallbackRequestUtil {
 
         @Override
         public void success() {
-            Log.e(TNUtil.TNREQUEST, "success: ");
+            Log.d(TNUtil.TN, "success loading list");
             viewLoading.setVisibility(View.GONE);
             viewEE.setVisibility(View.GONE);
         }

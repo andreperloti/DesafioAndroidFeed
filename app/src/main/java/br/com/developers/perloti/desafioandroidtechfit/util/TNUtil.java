@@ -16,6 +16,7 @@ import br.com.developers.perloti.desafioandroidtechfit.R;
 public class TNUtil {
 
     public static final String TNREQUEST = "TN-Request";
+    public static final String TN = "TN-Current";
     public static final String KEY_FEEDHASH = "FEED_HASH";
     public static final String KEY_IDPROFILE = "ID_PROFILE";
 
