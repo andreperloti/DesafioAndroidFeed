@@ -6,7 +6,7 @@ import io.realm.Realm;
  * Created by perloti on 10/05/18.
  */
 
-public class LikePersistence {
+public class LikeRepository {
 
     public static void saveInCache(Like like) {
         Realm realm = Realm.getDefaultInstance();

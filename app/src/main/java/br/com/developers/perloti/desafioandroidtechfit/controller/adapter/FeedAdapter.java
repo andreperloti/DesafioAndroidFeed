@@ -1,10 +1,8 @@
 package br.com.developers.perloti.desafioandroidtechfit.controller.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +23,7 @@ import br.com.developers.perloti.desafioandroidtechfit.controller.activities.Fee
 import br.com.developers.perloti.desafioandroidtechfit.controller.activities.FeedDetailActivity;
 import br.com.developers.perloti.desafioandroidtechfit.controller.activities.ProfileDetailActivity;
 import br.com.developers.perloti.desafioandroidtechfit.model.Like;
-import br.com.developers.perloti.desafioandroidtechfit.model.LikePersistence;
+import br.com.developers.perloti.desafioandroidtechfit.model.LikeRepository;
 import br.com.developers.perloti.desafioandroidtechfit.model.Meal;
 import br.com.developers.perloti.desafioandroidtechfit.util.ApplicationUtil;
 import br.com.developers.perloti.desafioandroidtechfit.util.CircleTransform;
@@ -165,7 +163,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Holder> {
                         .into(imageViewProfile);
             }
 
-            Like likeByHash = LikePersistence.getLikeByHash(feedHash);
+            Like likeByHash = LikeRepository.getLikeByHash(feedHash);
             if (likeByHash == null) {
                 imageViewLike.setImageResource(R.drawable.heart_off);
             } else {
@@ -175,14 +173,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Holder> {
             viewClickLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Like likeByHash = LikePersistence.getLikeByHash(feedHash);
+                    Like likeByHash = LikeRepository.getLikeByHash(feedHash);
                     if (likeByHash == null) {
                         imageViewLike.setImageResource(R.drawable.heart);
-                        LikePersistence.saveInCache(new Like(feedHash));
+                        LikeRepository.saveInCache(new Like(feedHash));
                         TNUtil.toastLong("SAVE LIKE");
                     } else {
                         imageViewLike.setImageResource(R.drawable.heart_off);
-                        LikePersistence.removeFromCache(feedHash);
+                        LikeRepository.removeFromCache(feedHash);
                         TNUtil.toastLong("REMOVE LIKE");
                     }
 

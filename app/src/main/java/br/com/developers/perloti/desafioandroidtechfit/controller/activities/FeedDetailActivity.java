@@ -25,10 +25,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import br.com.developers.perloti.desafioandroidtechfit.R;
+import br.com.developers.perloti.desafioandroidtechfit.controller.adapter.DetailFeedAdapter;
 import br.com.developers.perloti.desafioandroidtechfit.model.Like;
-import br.com.developers.perloti.desafioandroidtechfit.model.LikePersistence;
+import br.com.developers.perloti.desafioandroidtechfit.model.LikeRepository;
 import br.com.developers.perloti.desafioandroidtechfit.model.Meal;
 import br.com.developers.perloti.desafioandroidtechfit.util.ApplicationUtil;
+import br.com.developers.perloti.desafioandroidtechfit.util.CallbackRequestTN;
+import br.com.developers.perloti.desafioandroidtechfit.util.CallbackRequestUtil;
 import br.com.developers.perloti.desafioandroidtechfit.util.CircleTransform;
 import br.com.developers.perloti.desafioandroidtechfit.controller.api.ClienteAPI;
 import br.com.developers.perloti.desafioandroidtechfit.util.DateUtil;
@@ -48,7 +51,6 @@ public class FeedDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefreshLayout;
-
     @BindView(R.id.imageview_profile)
     ImageView imageViewProfile;
     @BindView(R.id.textview_name)
@@ -64,7 +66,6 @@ public class FeedDetailActivity extends AppCompatActivity {
     @BindView(R.id.view_click_like)
     RelativeLayout viewClickLike;
 
-
     @BindView(R.id.textview_cal_total)
     TextView textViewCal;
     @BindView(R.id.textview_carb_total)
@@ -76,7 +77,6 @@ public class FeedDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.imageview_like)
     ImageView imageViewLike;
-
     @BindView(R.id.view)
     RelativeLayout rlayout;
 
@@ -84,23 +84,32 @@ public class FeedDetailActivity extends AppCompatActivity {
     private String feed_hash;
     private LinkedTreeMap linkedTreeMapDetail = new LinkedTreeMap();
     private DetailFeedAdapter adapter;
+    private CallbackRequestTN cb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_detail);
         if (getSupportActionBar() != null)
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
-
         initFeedHash();
-
+        bindViewLike();
         bindRecycrerView();
         bindSwipeRefresh();
-        recyclerView.setNestedScrollingEnabled(false);
-        downloadDetail();
 
-        Like likeByHash = LikePersistence.getLikeByHash(feed_hash);
+        cb = new CallbackRequestUtil(this, new CallbackRequestUtil.MyListener() {
+            @Override
+            public void onClick() {
+                downloadDetail();
+            }
+        }).getCallbackRequestTN();
+
+        downloadDetail();
+    }
+
+    private void bindViewLike() {
+        Like likeByHash = LikeRepository.getLikeByHash(feed_hash);
         if (likeByHash == null) {
             imageViewLike.setImageResource(R.drawable.heart_off);
         } else {
@@ -110,18 +119,16 @@ public class FeedDetailActivity extends AppCompatActivity {
         viewClickLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Like likeByHash = LikePersistence.getLikeByHash(feed_hash);
+                Like likeByHash = LikeRepository.getLikeByHash(feed_hash);
                 if (likeByHash == null) {
                     imageViewLike.setImageResource(R.drawable.heart);
-                    LikePersistence.saveInCache(new Like(feed_hash));
+                    LikeRepository.saveInCache(new Like(feed_hash));
                     TNUtil.toastLong("SAVE LIKE");
                 } else {
                     imageViewLike.setImageResource(R.drawable.heart_off);
-                    LikePersistence.removeFromCache(feed_hash);
+                    LikeRepository.removeFromCache(feed_hash);
                     TNUtil.toastLong("REMOVE LIKE");
                 }
-
-
             }
         });
     }
@@ -138,6 +145,7 @@ public class FeedDetailActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         registerForContextMenu(recyclerView);
+        recyclerView.setNestedScrollingEnabled(false);
     }
 
 
@@ -170,24 +178,30 @@ public class FeedDetailActivity extends AppCompatActivity {
                         Log.e(TNUtil.TNREQUEST, "StatusCode: " + statusCode);
                         if (statusCode == 200) {
                             LinkedTreeMap body = response.body();
-                            linkedTreeMapDetail = (LinkedTreeMap) body.get("item");
-
-                            onUpdate();
+                            linkedTreeMapDetail = JsonUtil.getObject(body, "item");
+                            if (linkedTreeMapDetail != null && !linkedTreeMapDetail.isEmpty()) {
+                                onUpdate();
+                                cb.success();
+                            } else {
+                                cb.empty();
+                            }
+                        } else {
+                            cb.error();
                         }
-
                         setRefreshing(false);
                     }
 
                     @Override
                     public void onFailure(Call<LinkedTreeMap> call, Throwable t) {
                         Log.e(TNUtil.TNREQUEST, "Error GET DETAIL FEED");
+                        cb.error();
                         setRefreshing(false);
                     }
                 });
     }
 
     private void onUpdate() {
-        LinkedTreeMap profile = (LinkedTreeMap) linkedTreeMapDetail.get("profile");
+        LinkedTreeMap profile = JsonUtil.getObject(linkedTreeMapDetail,"profile");
         if (profile.get("image") != null) {
             Picasso.with(this).load(profile.get("image").toString())
                     .placeholder(R.drawable.ic_person)
@@ -232,7 +246,7 @@ public class FeedDetailActivity extends AppCompatActivity {
                 " " + DateUtil.dateToStringMask(date);
 
         if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle(itemMealDate == null ? getString(R.string.detail) : itemMealDate);
+            getSupportActionBar().setTitle(itemMealDate);
 
         int w = rlayout.getWidth();
         int h = (int) (w * 1.2);
@@ -256,7 +270,8 @@ public class FeedDetailActivity extends AppCompatActivity {
                     }
                 });
 
-        ArrayList<LinkedTreeMap> items = (ArrayList<LinkedTreeMap>) linkedTreeMapDetail.get("foods");
+
+        ArrayList<LinkedTreeMap> items = (ArrayList<LinkedTreeMap>) JsonUtil.getList(linkedTreeMapDetail,"foods");
         adapter = new DetailFeedAdapter(this, items);
         recyclerView.setAdapter(adapter);
 
@@ -268,76 +283,6 @@ public class FeedDetailActivity extends AppCompatActivity {
         return true;
     }
 
-    class DetailFeedAdapter extends RecyclerView.Adapter<FeedDetailActivity.DetailFeedAdapter.Holder> {
 
-        Context context;
-        ArrayList<LinkedTreeMap> linkedTreeMapItems = new ArrayList<>();
-
-        public DetailFeedAdapter(Context context, ArrayList<LinkedTreeMap> linkedTreeMapItems) {
-            this.context = context;
-            this.linkedTreeMapItems = linkedTreeMapItems;
-        }
-
-        @Override
-        public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.feed_detail_item, parent, false);
-            return new Holder(inflate);
-        }
-
-        @Override
-        public void onBindViewHolder(Holder holder, int position) {
-            holder.render(linkedTreeMapItems.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            return linkedTreeMapItems.size();
-        }
-
-        public class Holder extends RecyclerView.ViewHolder {
-            @BindView(R.id.textview_cal)
-            TextView textViewCal;
-            @BindView(R.id.textview_carb)
-            TextView textViewCarb;
-            @BindView(R.id.textview_gord)
-            TextView textViewGord;
-            @BindView(R.id.textview_prot)
-            TextView textViewProt;
-            @BindView(R.id.textview_name_food)
-            TextView textViewNameFood;
-            @BindView(R.id.textview_units)
-            TextView textViewUnits;
-
-            public Holder(View itemView) {
-                super(itemView);
-                ButterKnife.bind(this, itemView);
-
-            }
-
-            //            format("%.2f" + getString(R.string.g),
-            public void render(LinkedTreeMap item) {
-                String description = JsonUtil.getString(item, "description");
-                textViewNameFood.setText(description);
-
-                float amount = JsonUtil.getFloat(item, "amount", 0);
-                String measure = JsonUtil.getString(item, "measure");
-                float weight = JsonUtil.getFloat(item, "weight", 0);
-                textViewUnits.setText(amount + " " + measure + " (" + weight + getString(R.string.g) + ")");
-
-
-                float energy = JsonUtil.getFloat(item, "energy", 0);
-                textViewCal.setText(String.format("%.0f" + getString(R.string.kcal), energy));
-                float carbohydrate = JsonUtil.getFloat(item, "carbohydrate", 0);
-                textViewCarb.setText(String.format("%.0f" + getString(R.string.g), carbohydrate));
-                float fat = JsonUtil.getFloat(item, "fat", 0);
-                textViewGord.setText(String.format("%.0f" + getString(R.string.g), fat));
-                float protein = JsonUtil.getFloat(item, "protein", 0);
-                textViewProt.setText(String.format("%.0f" + getString(R.string.g), protein));
-
-
-            }
-        }
-
-    }
 
 }
