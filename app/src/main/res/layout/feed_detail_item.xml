@@ -21,7 +21,7 @@
                 android:layout_marginTop="15dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/name_of_food"
-                android:textColor="#ff9e20"
+                android:textColor="@color/color_primary"
                 android:textSize="16sp"
                 android:textStyle="normal" />
 
@@ -115,7 +115,7 @@
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center_horizontal"
                     android:text="Xcal"
-                    android:textColor="#ff9e20"
+                    android:textColor="@color/color_primary"
                     android:textSize="14sp"
                     android:textStyle="normal" />
 
@@ -127,7 +127,7 @@
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center_horizontal"
                     android:text="xg"
-                    android:textColor="#ff9e20"
+                    android:textColor="@color/color_primary"
                     android:textSize="14sp"
                     android:textStyle="normal" />
 
@@ -139,7 +139,7 @@
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center_horizontal"
                     android:text="xg"
-                    android:textColor="#ff9e20"
+                    android:textColor="@color/color_primary"
                     android:textSize="14sp"
                     android:textStyle="normal" />
 
@@ -151,7 +151,7 @@
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center_horizontal"
                     android:text="xg"
-                    android:textColor="#ff9e20"
+                    android:textColor="@color/color_primary"
                     android:textSize="14sp"
                     android:textStyle="normal" />
 

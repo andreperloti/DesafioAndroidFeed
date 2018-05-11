@@ -53,7 +53,7 @@
                                 android:fontFamily="sans-serif-medium"
                                 android:maxLines="1"
                                 android:text="@string/name_of_author"
-                                android:textColor="#ff9e20"
+                                android:textColor="@color/color_primary"
                                 android:textSize="16sp"
                                 android:textStyle="normal" />
 
@@ -144,7 +144,7 @@
                         android:layout_marginTop="20dp"
                         android:fontFamily="sans-serif-medium"
                         android:text="@string/total_consumido"
-                        android:textColor="#ff9e20"
+                        android:textColor="@color/color_primary"
                         android:textSize="18sp"
                         android:textStyle="normal" />
 
@@ -218,7 +218,7 @@
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center_horizontal"
                             android:text="Xcal"
-                            android:textColor="#ff9e20"
+                            android:textColor="@color/color_primary"
                             android:textSize="14sp"
                             android:textStyle="normal" />
 
@@ -230,7 +230,7 @@
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center_horizontal"
                             android:text="xg"
-                            android:textColor="#ff9e20"
+                            android:textColor="@color/color_primary"
                             android:textSize="14sp"
                             android:textStyle="normal" />
 
@@ -242,7 +242,7 @@
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center_horizontal"
                             android:text="xg"
-                            android:textColor="#ff9e20"
+                            android:textColor="@color/color_primary"
                             android:textSize="14sp"
                             android:textStyle="normal" />
 
@@ -254,7 +254,7 @@
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center_horizontal"
                             android:text="xg"
-                            android:textColor="#ff9e20"
+                            android:textColor="@color/color_primary"
                             android:textSize="14sp"
                             android:textStyle="normal" />
 

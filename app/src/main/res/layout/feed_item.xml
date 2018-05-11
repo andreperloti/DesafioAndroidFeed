@@ -36,7 +36,7 @@
                     android:fontFamily="sans-serif-medium"
                     android:maxLines="1"
                     android:text="@string/name_of_author"
-                    android:textColor="#ff9e20"
+                    android:textColor="@color/color_primary"
                     android:textSize="16sp"
                     android:textStyle="normal" />
 
@@ -113,7 +113,7 @@
                     android:layout_marginTop="15dp"
                     android:fontFamily="sans-serif-medium"
                     android:text="Refeição de DD/MM/YYYY"
-                    android:textColor="#ff9e20"
+                    android:textColor="@color/color_primary"
                     android:textSize="16sp"
                     android:textStyle="normal" />
 

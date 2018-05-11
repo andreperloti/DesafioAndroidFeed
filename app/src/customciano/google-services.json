@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "680942538136",
+    "firebase_url": "https://desafioandroid-44f3a.firebaseio.com",
+    "project_id": "desafioandroid-44f3a",
+    "storage_bucket": "desafioandroid-44f3a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:680942538136:android:ca709e40271d28fd",
+        "android_client_info": {
+          "package_name": "br.com.developers.perloti.desafioandroidtechfit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "680942538136-042ubsm9282pi56305taurh68mnvscio.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClooXPU-xssS_zQwRbL7tvYL1r3MihYwA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:680942538136:android:5fc2a5665b984fb6",
+        "android_client_info": {
+          "package_name": "br.com.developers.perloti.desafioandroidtechfit.customciano"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "680942538136-042ubsm9282pi56305taurh68mnvscio.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClooXPU-xssS_zQwRbL7tvYL1r3MihYwA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
