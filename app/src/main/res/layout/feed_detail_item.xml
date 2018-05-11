@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:id="@+id/relative_header"
@@ -20,7 +20,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="Nome do alimento"
+                android:text="@string/name_of_food"
                 android:textColor="#ff9e20"
                 android:textSize="16sp"
                 android:textStyle="normal" />
@@ -30,12 +30,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textview_name_food"
+                android:layout_marginBottom="15dp"
                 android:layout_marginLeft="20dp"
                 android:fontFamily="sans-serif"
                 android:text="x unidades (Yg)"
                 android:textColor="#5a5757"
                 android:textSize="14sp"
-                android:layout_marginBottom="15dp"
                 android:textStyle="normal" />
         </RelativeLayout>
         <!--android:background="#f6f6f6"-->
@@ -43,8 +43,8 @@
             android:id="@+id/relative_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#f6f6f6"
-            android:layout_below="@+id/relative_header">
+            android:layout_below="@+id/relative_header"
+            android:background="#f6f6f6">
 
             <LinearLayout
                 android:id="@+id/linear_label"
@@ -102,7 +102,8 @@
             <LinearLayout
                 android:id="@+id/linear_content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:layout_below="@+id/linear_label"
                 android:orientation="horizontal">
 

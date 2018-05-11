@@ -127,7 +127,7 @@ public class FeedActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<LinkedTreeMap> call, Response<LinkedTreeMap> response) {
                         int statusCode = response.code();
-                        Log.e(TNUtil.TNREQUEST, "StatusCode: " + statusCode);
+                        Log.e(TNUtil.TNREQUEST, "getFeed - statusCode: " + statusCode);
                         if (statusCode == 200) {
                             linkedTreeMapFeed = response.body();
                             if (linkedTreeMapFeed != null && !linkedTreeMapFeed.isEmpty()) {
@@ -173,7 +173,7 @@ public class FeedActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<LinkedTreeMap> call, Response<LinkedTreeMap> response) {
                         int statusCode = response.code();
-                        Log.e(TNUtil.TNREQUEST, "StatusCode UPDATE: " + statusCode);
+                        Log.e(TNUtil.TNREQUEST, "getFeed(p,t) statusCode: " + statusCode);
                         if (statusCode == 200) {
                             linkedTreeMapFeed = response.body();
                             ArrayList<LinkedTreeMap> items = (ArrayList<LinkedTreeMap>) JsonUtil.getList(linkedTreeMapFeed, "items");

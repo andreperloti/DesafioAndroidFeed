@@ -2,7 +2,6 @@ package br.com.developers.perloti.desafioandroidtechfit.controller.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,22 +13,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.google.gson.internal.LinkedTreeMap;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-import br.com.developers.perloti.desafioandroidtechfit.BuildConfig;
 import br.com.developers.perloti.desafioandroidtechfit.R;
 import br.com.developers.perloti.desafioandroidtechfit.controller.adapter.DetailFeedAdapter;
 import br.com.developers.perloti.desafioandroidtechfit.controller.api.ClienteAPI;
@@ -72,7 +62,6 @@ public class FeedDetailActivity extends AppCompatActivity {
     ProgressBar progressBarImageMeal;
     @BindView(R.id.view_click_like)
     RelativeLayout viewClickLike;
-
     @BindView(R.id.textview_cal_total)
     TextView textViewCal;
     @BindView(R.id.textview_carb_total)
@@ -81,12 +70,10 @@ public class FeedDetailActivity extends AppCompatActivity {
     TextView textViewGord;
     @BindView(R.id.textview_prot_total)
     TextView textViewProt;
-
     @BindView(R.id.imageview_like)
     ImageView imageViewLike;
     @BindView(R.id.view)
     RelativeLayout rlayout;
-
 
     private String feed_hash;
     private LinkedTreeMap linkedTreeMapDetail = new LinkedTreeMap();
@@ -137,11 +124,9 @@ public class FeedDetailActivity extends AppCompatActivity {
                 if (likeByHash == null) {
                     imageViewLike.setImageResource(R.drawable.heart);
                     LikeRepository.saveInCache(new Like(feed_hash));
-                    TNUtil.toastLong("SAVE LIKE");
                 } else {
                     imageViewLike.setImageResource(R.drawable.heart_off);
                     LikeRepository.removeFromCache(feed_hash);
-                    TNUtil.toastLong("REMOVE LIKE");
                 }
             }
         });
@@ -151,7 +136,6 @@ public class FeedDetailActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             feed_hash = extras.getString(TNUtil.KEY_FEEDHASH);
-            Toast.makeText(this, "ID: " + feed_hash, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -190,7 +174,7 @@ public class FeedDetailActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<LinkedTreeMap> call, Response<LinkedTreeMap> response) {
                         int statusCode = response.code();
-                        Log.e(TNUtil.TNREQUEST, "StatusCode: " + statusCode);
+                        Log.d(TNUtil.TNREQUEST, "getDetailPost - statusCode: " + statusCode);
                         if (statusCode == 200) {
                             LinkedTreeMap body = response.body();
                             linkedTreeMapDetail = JsonUtil.getObject(body, "item");

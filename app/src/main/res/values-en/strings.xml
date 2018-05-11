@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Feed Tecnonutri</string>
+
+    <string name="meal_0">Breakfast</string>
+    <string name="meal_1">Morning Snack</string>
+    <string name="meal_2">Lunch</string>
+    <string name="meal_3">Afternoon Snack</string>
+    <string name="meal_4">Dinner</string>
+    <string name="meal_5">Night Snack</string>
+    <string name="meal_6">Pre-Training Snack</string>
+    <string name="meal_7">Post-Training Snack</string>
+
+    <string name="of">of</string>
+    <string name="date_mask">yyyy-MM-dd</string>
+    <string name="kcal">Kcal</string>
+    <string name="profile">Profile</string>
+    <string name="detail">Detail</string>
+    <string name="cal">cal</string>
+    <string name="g">g</string>
+    <string name="total_consumido">Total consumed</string>
+    <string name="error_try_again_later">Error, please try again later!</string>
+    <string name="no_results_for_filter">No Results Available</string>
+    <string name="error_loading_image">Error loading image</string>
+    <string name="name_of_author">Name of Author</string>
+    <string name="goal">Goal</string>
+    <string name="carb">Carb</string>
+    <string name="prot">Prot</string>
+    <string name="gord">Gord</string>
+    <string name="name_of_food">Name of Food</string>
+    <string name="feed_tecnonutri">Feed Tecnonutri</string>
+    <string name="detail_feed">Detail Feed</string>
+    <string name="detail_profile">Detail Profile</string>
+
+
+</resources>

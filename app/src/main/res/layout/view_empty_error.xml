@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/view_empty_error"
     android:layout_width="match_parent"
-    android:visibility="gone"
+    android:layout_height="match_parent"
     android:background="#fff"
-    android:layout_height="match_parent">
+    android:visibility="gone">
 
     <TextView
         android:id="@+id/textview_empty_error"
@@ -14,32 +14,30 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:gravity="center"
-        android:text="Erro, tente novamente"
         android:textSize="18sp" />
 
     <Button
         android:id="@+id/button_empty_error"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:clickable="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_margin="32dp"
         android:background="@color/color_primary"
-        android:text="Tentar Novamente" />
+        android:clickable="true" />
 
     <RelativeLayout
         android:id="@+id/view_loading"
         android:layout_width="match_parent"
-        android:background="#70000000"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#70000000">
 
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
             android:indeterminate="true" />
 
     </RelativeLayout>

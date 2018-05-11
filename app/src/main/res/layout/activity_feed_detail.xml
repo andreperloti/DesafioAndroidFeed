@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:ads="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_above="@+id/adView"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/adView">
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh"
@@ -52,7 +52,7 @@
                                 android:layout_toRightOf="@+id/imageview_profile"
                                 android:fontFamily="sans-serif-medium"
                                 android:maxLines="1"
-                                android:text="Nome do Autor"
+                                android:text="@string/name_of_author"
                                 android:textColor="#ff9e20"
                                 android:textSize="16sp"
                                 android:textStyle="normal" />
@@ -65,7 +65,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_toRightOf="@+id/imageview_profile"
                                 android:fontFamily="sans-serif"
-                                android:text="Objetivo"
+                                android:text="@string/goal"
                                 android:textColor="#5a5757"
                                 android:textSize="14sp"
                                 android:textStyle="normal" />
@@ -163,7 +163,7 @@
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center_horizontal"
-                            android:text="Cal"
+                            android:text="@string/cal"
                             android:textColor="#5a5757"
                             android:textSize="14sp"
                             android:textStyle="normal" />
@@ -174,7 +174,7 @@
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center_horizontal"
-                            android:text="Carb"
+                            android:text="@string/carb"
                             android:textColor="#5a5757"
                             android:textSize="14sp"
                             android:textStyle="normal" />
@@ -185,7 +185,7 @@
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center_horizontal"
-                            android:text="Prot"
+                            android:text="@string/prot"
                             android:textColor="#5a5757"
                             android:textSize="14sp"
                             android:textStyle="normal" />
@@ -196,7 +196,7 @@
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center_horizontal"
-                            android:text="Gord"
+                            android:text="@string/gord"
                             android:textColor="#5a5757"
                             android:textSize="14sp"
                             android:textStyle="normal" />

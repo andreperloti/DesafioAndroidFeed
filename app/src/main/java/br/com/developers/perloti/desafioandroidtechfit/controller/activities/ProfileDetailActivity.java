@@ -54,7 +54,6 @@ public class ProfileDetailActivity extends AppCompatActivity {
     private CallbackRequestTN cb;
     private AdsRemoteManager adsRemoteManager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +85,6 @@ public class ProfileDetailActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             id_profile = extras.getString(TNUtil.KEY_IDPROFILE);
-            Toast.makeText(this, "ID: " + id_profile, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -122,7 +120,7 @@ public class ProfileDetailActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<LinkedTreeMap> call, Response<LinkedTreeMap> response) {
                         int statusCode = response.code();
-                        Log.e(TNUtil.TNREQUEST, "StatusCode: " + statusCode);
+                        Log.e(TNUtil.TNREQUEST, "getProfile - statusCode: " + statusCode);
                         if (statusCode == 200) {
                             linkedTreeMapProfile = response.body();
                             if (linkedTreeMapProfile != null && !linkedTreeMapProfile.isEmpty()){
@@ -149,8 +147,7 @@ public class ProfileDetailActivity extends AppCompatActivity {
     private void onUpdate() {
         LinkedTreeMap profile = (LinkedTreeMap) linkedTreeMapProfile.get("profile");
         int items_count = JsonUtil.getInt(profile, "items_count", 0);
-        Toast.makeText(this, "TOTAL POST: " + items_count, Toast.LENGTH_LONG).show();
-        Log.e(TNUtil.TNREQUEST, "TOTAL POST: " + items_count);
+        Log.d(TNUtil.TN, "TOTAL Meals: " + items_count);
         if (profile.get("image") != null) {
             Picasso.with(this).load(profile.get("image").toString())
                     .placeholder(R.drawable.ic_person)
@@ -171,7 +168,8 @@ public class ProfileDetailActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(nameProfile == null ? "Perfil" : nameProfile);
         textViewGoal.setText(goalProfile == null ? "" : goalProfile);
 
-        ArrayList<LinkedTreeMap> linkedTreeMapItems = (ArrayList<LinkedTreeMap>) linkedTreeMapProfile.get("items");
+        ArrayList<LinkedTreeMap> linkedTreeMapItems =
+                (ArrayList<LinkedTreeMap>) JsonUtil.getList(linkedTreeMapProfile,"items");
         adapter = new ProfileDetailAdapter(this, linkedTreeMapItems);
         recyclerView.setAdapter(adapter);
 
@@ -192,7 +190,7 @@ public class ProfileDetailActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<LinkedTreeMap> call, Response<LinkedTreeMap> response) {
                         int statusCode = response.code();
-                        Log.e(TNUtil.TNREQUEST, "StatusCode: " + statusCode);
+                        Log.e(TNUtil.TNREQUEST, "getProfile(p,t) - statusCode: " + statusCode);
                         if (statusCode == 200) {
                             linkedTreeMapProfile = response.body();
                             ArrayList<LinkedTreeMap> linkedTreeMapItems = (ArrayList<LinkedTreeMap>) JsonUtil.getList(linkedTreeMapProfile,"items");

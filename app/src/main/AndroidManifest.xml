@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".controller.activities.FeedActivity"
-            android:label="Feed Tecnonutri">
+            android:label="@string/feed_tecnonutri">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -24,13 +24,12 @@
 
         <activity
             android:name=".controller.activities.FeedDetailActivity"
-            android:label="Detail Feed"
+            android:label="@string/detail_feed"
             android:screenOrientation="portrait" />
-
 
         <activity
             android:name=".controller.activities.ProfileDetailActivity"
-            android:label="Detail Profile"
+            android:label="@string/detail_profile"
             android:screenOrientation="portrait" />
 
         <meta-data

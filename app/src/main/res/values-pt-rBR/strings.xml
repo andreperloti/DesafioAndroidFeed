@@ -19,6 +19,17 @@
     <string name="detail">Detalhes</string>
     <string name="cal">cal</string>
     <string name="error_try_again_later">Erro, tente novamente mais tarde!</string>
-    <string name="banner_ad_unit_id">ca-app-pub-1114567562439612/2154687649</string>
-    <string name="YOUR_ADMOB_APP_ID">ca-app-pub-1114567562439612~9799451361</string>
+    <string name="name_of_author">Nome do Autor</string>
+    <string name="goal">Objetivo</string>
+    <string name="carb">Carb</string>
+    <string name="prot">Prot</string>
+    <string name="gord">Gord</string>
+    <string name="feed_tecnonutri">Feed Tecnonutri</string>
+    <string name="detail_feed">Detalhes Feed</string>
+    <string name="detail_profile">Detalhes Perfil</string>
+    <string name="g">g</string>
+    <string name="total_consumido">Total consumido</string>
+    <string name="no_results_for_filter">Nenhum resultado disponível</string>
+    <string name="error_loading_image">Erro ao carregar a imagem</string>
+    <string name="name_of_food">Nome do alimento</string>
 </resources>

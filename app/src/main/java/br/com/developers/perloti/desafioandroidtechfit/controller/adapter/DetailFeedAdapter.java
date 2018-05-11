@@ -63,7 +63,6 @@ public class DetailFeedAdapter extends RecyclerView.Adapter<DetailFeedAdapter.Ho
         public Holder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
         }
 
         void render(LinkedTreeMap item) {
@@ -73,7 +72,9 @@ public class DetailFeedAdapter extends RecyclerView.Adapter<DetailFeedAdapter.Ho
             float amount = JsonUtil.getFloat(item, "amount", 0);
             String measure = JsonUtil.getString(item, "measure");
             float weight = JsonUtil.getFloat(item, "weight", 0);
-            textViewUnits.setText(amount + " " + measure + " (" + weight + context.getString(R.string.g) + ")");
+
+            String formatUnit = String.format("%.1f " + measure + " (%.1f" + context.getString(R.string.g) + ")", amount, weight);
+            textViewUnits.setText(formatUnit);
 
             float energy = JsonUtil.getFloat(item, "energy", 0);
             textViewCal.setText(String.format("%.0f" + context.getString(R.string.kcal), energy));

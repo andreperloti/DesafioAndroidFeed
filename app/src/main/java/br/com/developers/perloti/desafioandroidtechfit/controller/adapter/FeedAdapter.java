@@ -104,16 +104,16 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Holder> {
             final String feedHash = item.get("feedHash").toString();
             String nameProfile = profile.get("name").toString();
             String goalProfile = profile.get("general_goal").toString();
-            int energy = JsonUtil.getInt(item, "energy", 0);//item.get("energy").toString();
+            int energy = JsonUtil.getInt(item, "energy", 0);
             Date date = DateUtil.stringToDateFeed(item.get("date").toString());
-
+            String energyString = String.valueOf(energy) + ApplicationUtil.getContext().getString(R.string.kcal);
 
             Meal meal = Meal.getMeal(JsonUtil.getInt(item, "meal", 0));
             String itemMealDate = meal + " " + ApplicationUtil.getContext().getString(R.string.of) + " " + DateUtil.dateToStringMask(date);
             textViewName.setText(nameProfile == null ? "" : nameProfile);
             textViewGoal.setText(goalProfile == null ? "" : goalProfile);
             if (energy != 0) {
-                textViewKcal.setText(energy + ApplicationUtil.getContext().getString(R.string.kcal));
+                textViewKcal.setText(energyString);
                 textViewKcal.setVisibility(View.VISIBLE);
             } else {
                 textViewKcal.setVisibility(View.GONE);
@@ -170,14 +170,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Holder> {
                     if (likeByHash == null) {
                         imageViewLike.setImageResource(R.drawable.heart);
                         LikeRepository.saveInCache(new Like(feedHash));
-                        TNUtil.toastLong("SAVE LIKE");
                     } else {
                         imageViewLike.setImageResource(R.drawable.heart_off);
                         LikeRepository.removeFromCache(feedHash);
-                        TNUtil.toastLong("REMOVE LIKE");
                     }
-
-
                 }
             });
 

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import br.com.developers.perloti.desafioandroidtechfit.R;
 import br.com.developers.perloti.desafioandroidtechfit.controller.activities.FeedDetailActivity;
 import br.com.developers.perloti.desafioandroidtechfit.util.ApplicationUtil;
+import br.com.developers.perloti.desafioandroidtechfit.util.TNUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -96,9 +97,8 @@ public class ProfileDetailAdapter extends RecyclerView.Adapter<ProfileDetailAdap
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(ApplicationUtil.getContext(), "FeedHash: " + feedHash, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(context, FeedDetailActivity.class);
-                    intent.putExtra("FEED_HASH", String.valueOf(feedHash));
+                    intent.putExtra(TNUtil.KEY_FEEDHASH, String.valueOf(feedHash));
                     context.startActivity(intent);
                 }
             });

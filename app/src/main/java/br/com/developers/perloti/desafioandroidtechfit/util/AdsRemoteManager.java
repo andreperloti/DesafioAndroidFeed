@@ -56,10 +56,10 @@ public class AdsRemoteManager {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Log.e(TNUtil.TN, "Remote Config FETCH success. ");
+                            Log.d(TNUtil.TN, "RemoteConfig FETCH success. ");
                             instance.activateFetched();
                         } else {
-                            Log.e(TNUtil.TN, "Remote Config FETCH FAIL. ");
+                            Log.e(TNUtil.TN, "RemoteConfig FETCH FAIL. ");
                         }
                         printAdsBannerFooter();
                     }

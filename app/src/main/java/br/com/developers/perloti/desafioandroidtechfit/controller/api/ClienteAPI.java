@@ -54,7 +54,6 @@ public interface ClienteAPI {
                     .build();
 
             return retrofit.create(ClienteAPI.class);
-
         }
     }
 }

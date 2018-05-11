@@ -34,8 +34,8 @@
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@+id/imageview_profile"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Nome do Autor"
                     android:maxLines="1"
+                    android:text="@string/name_of_author"
                     android:textColor="#ff9e20"
                     android:textSize="16sp"
                     android:textStyle="normal" />
@@ -48,7 +48,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/imageview_profile"
                     android:fontFamily="sans-serif"
-                    android:text="Objetivo"
+                    android:text="@string/goal"
                     android:textColor="#5a5757"
                     android:textSize="14sp"
                     android:textStyle="normal" />

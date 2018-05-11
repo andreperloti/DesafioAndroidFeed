@@ -1,8 +1,5 @@
 package br.com.developers.perloti.desafioandroidtechfit.model;
 
-import android.app.Application;
-
-import br.com.developers.perloti.desafioandroidtechfit.R;
 import br.com.developers.perloti.desafioandroidtechfit.util.ApplicationUtil;
 
 /**
