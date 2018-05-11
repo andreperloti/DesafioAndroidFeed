@@ -15,6 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".controller.activities.FeedActivity"
+            android:screenOrientation="portrait"
             android:label="@string/feed_tecnonutri">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
