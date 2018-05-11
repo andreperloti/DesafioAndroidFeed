@@ -33,6 +33,9 @@
             android:label="Detail Profile"
             android:screenOrientation="portrait" />
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="b26e787eb6f54f165e6458ab2df5d1361b9383ca" />
     </application>
 
 </manifest>

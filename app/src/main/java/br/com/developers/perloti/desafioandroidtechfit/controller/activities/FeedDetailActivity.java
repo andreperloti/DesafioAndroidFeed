@@ -2,6 +2,7 @@ package br.com.developers.perloti.desafioandroidtechfit.controller.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -15,18 +16,27 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.google.gson.internal.LinkedTreeMap;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
 
+import br.com.developers.perloti.desafioandroidtechfit.BuildConfig;
 import br.com.developers.perloti.desafioandroidtechfit.R;
 import br.com.developers.perloti.desafioandroidtechfit.controller.adapter.DetailFeedAdapter;
 import br.com.developers.perloti.desafioandroidtechfit.controller.api.ClienteAPI;
 import br.com.developers.perloti.desafioandroidtechfit.model.Like;
 import br.com.developers.perloti.desafioandroidtechfit.model.LikeRepository;
 import br.com.developers.perloti.desafioandroidtechfit.model.Meal;
+import br.com.developers.perloti.desafioandroidtechfit.util.AdsRemoteManager;
 import br.com.developers.perloti.desafioandroidtechfit.util.ApplicationUtil;
 import br.com.developers.perloti.desafioandroidtechfit.util.CallbackRequestTN;
 import br.com.developers.perloti.desafioandroidtechfit.util.CallbackRequestUtil;
@@ -82,6 +92,7 @@ public class FeedDetailActivity extends AppCompatActivity {
     private LinkedTreeMap linkedTreeMapDetail = new LinkedTreeMap();
     private DetailFeedAdapter adapter;
     private CallbackRequestTN cb;
+    private AdsRemoteManager adsRemoteManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +108,10 @@ public class FeedDetailActivity extends AppCompatActivity {
 
         setupCallbackRequest();
         downloadDetail();
+        adsRemoteManager = new AdsRemoteManager(this);
+        adsRemoteManager.printAdsBannerFooter();
     }
+
 
     private void setupCallbackRequest() {
         cb = new CallbackRequestUtil(this, new CallbackRequestUtil.MyListener() {
@@ -163,6 +177,7 @@ public class FeedDetailActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                adsRemoteManager.refreshRemoteConfig();
                 downloadDetail();
             }
         });
@@ -201,7 +216,7 @@ public class FeedDetailActivity extends AppCompatActivity {
     }
 
     private void onUpdate() {
-        LinkedTreeMap profile = JsonUtil.getObject(linkedTreeMapDetail,"profile");
+        LinkedTreeMap profile = JsonUtil.getObject(linkedTreeMapDetail, "profile");
         if (profile.get("image") != null) {
             Picasso.with(this).load(profile.get("image").toString())
                     .placeholder(R.drawable.ic_person)
@@ -271,7 +286,7 @@ public class FeedDetailActivity extends AppCompatActivity {
                 });
 
 
-        ArrayList<LinkedTreeMap> items = (ArrayList<LinkedTreeMap>) JsonUtil.getList(linkedTreeMapDetail,"foods");
+        ArrayList<LinkedTreeMap> items = (ArrayList<LinkedTreeMap>) JsonUtil.getList(linkedTreeMapDetail, "foods");
         adapter = new DetailFeedAdapter(this, items);
         recyclerView.setAdapter(adapter);
 
@@ -282,7 +297,6 @@ public class FeedDetailActivity extends AppCompatActivity {
         finish();
         return true;
     }
-
 
 
 }

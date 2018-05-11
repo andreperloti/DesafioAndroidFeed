@@ -1,18 +1,12 @@
 package br.com.developers.perloti.desafioandroidtechfit.controller.activities;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,17 +17,16 @@ import java.util.ArrayList;
 
 import br.com.developers.perloti.desafioandroidtechfit.R;
 import br.com.developers.perloti.desafioandroidtechfit.controller.adapter.ProfileDetailAdapter;
-import br.com.developers.perloti.desafioandroidtechfit.util.ApplicationUtil;
+import br.com.developers.perloti.desafioandroidtechfit.controller.api.ClienteAPI;
+import br.com.developers.perloti.desafioandroidtechfit.util.AdsRemoteManager;
 import br.com.developers.perloti.desafioandroidtechfit.util.CallbackRequestTN;
 import br.com.developers.perloti.desafioandroidtechfit.util.CallbackRequestUtil;
 import br.com.developers.perloti.desafioandroidtechfit.util.CircleTransform;
-import br.com.developers.perloti.desafioandroidtechfit.controller.api.ClienteAPI;
 import br.com.developers.perloti.desafioandroidtechfit.util.EndlessRecyclerOnScrollListener;
 import br.com.developers.perloti.desafioandroidtechfit.util.JsonUtil;
 import br.com.developers.perloti.desafioandroidtechfit.util.TNUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,6 +52,7 @@ public class ProfileDetailActivity extends AppCompatActivity {
     LinkedTreeMap linkedTreeMapProfile = new LinkedTreeMap();
     private ProfileDetailAdapter adapter;
     private CallbackRequestTN cb;
+    private AdsRemoteManager adsRemoteManager;
 
 
     @Override
@@ -73,7 +67,11 @@ public class ProfileDetailActivity extends AppCompatActivity {
         bindSwipeRefresh();
         setupCallbackRequest();
         downloadProfile();
+
+        adsRemoteManager = new AdsRemoteManager(this);
+        adsRemoteManager.printAdsBannerFooter();
     }
+
 
     private void setupCallbackRequest() {
         cb = new CallbackRequestUtil(this, new CallbackRequestUtil.MyListener() {
@@ -111,6 +109,7 @@ public class ProfileDetailActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                adsRemoteManager.refreshRemoteConfig();
                 downloadProfile();
             }
         });

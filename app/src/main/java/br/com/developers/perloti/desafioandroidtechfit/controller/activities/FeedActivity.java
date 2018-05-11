@@ -20,6 +20,7 @@ import java.util.List;
 import br.com.developers.perloti.desafioandroidtechfit.R;
 import br.com.developers.perloti.desafioandroidtechfit.controller.adapter.FeedAdapter;
 import br.com.developers.perloti.desafioandroidtechfit.controller.api.ClienteAPI;
+import br.com.developers.perloti.desafioandroidtechfit.util.AdsRemoteManager;
 import br.com.developers.perloti.desafioandroidtechfit.util.CallbackRequestTN;
 import br.com.developers.perloti.desafioandroidtechfit.util.CallbackRequestUtil;
 import br.com.developers.perloti.desafioandroidtechfit.util.EndlessRecyclerOnScrollListener;
@@ -49,6 +50,7 @@ public class FeedActivity extends AppCompatActivity {
     private LinkedTreeMap linkedTreeMapFeed = new LinkedTreeMap();
     private FeedAdapter adapter;
     private CallbackRequestTN cb;
+    private AdsRemoteManager adsRemoteManager;
 
     @Override
     protected void onResume() {
@@ -68,7 +70,11 @@ public class FeedActivity extends AppCompatActivity {
         bindSwipeRefresh();
         bindRecycrerViewFeed();
         downloadFeed();
+
+        adsRemoteManager = new AdsRemoteManager(this);
+        adsRemoteManager.printAdsBannerFooter();
     }
+
 
     private void setupCallbackRequest() {
         cb = new CallbackRequestUtil(this, new CallbackRequestUtil.MyListener() {
@@ -108,7 +114,8 @@ public class FeedActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                reload();
+                adsRemoteManager.refreshRemoteConfig();
+                downloadFeed();
             }
         });
     }
@@ -184,10 +191,6 @@ public class FeedActivity extends AppCompatActivity {
                     }
                 });
 
-    }
-
-    private void reload() {
-        downloadFeed();
     }
 
 }

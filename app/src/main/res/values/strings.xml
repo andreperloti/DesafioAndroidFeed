@@ -23,4 +23,8 @@
     <string name="error_loading_image">Erro ao carregar a imagem</string>
 
 
+    <string name="banner_ad_unit_id">ca-app-pub-1114567562439612/2154687649</string>
+    <string name="YOUR_ADMOB_APP_ID">ca-app-pub-1114567562439612~9799451361</string>
+
+
 </resources>
