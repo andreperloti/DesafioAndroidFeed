@@ -100,7 +100,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Holder> {
 
         void render(LinkedTreeMap item) {
             LinkedTreeMap profile = (LinkedTreeMap) item.get("profile");
-            final int id_user = JsonUtil.getInt(profile, "id", 0);
+            final int idProfile = JsonUtil.getInt(profile, "id", 0);
             final String feedHash = item.get("feedHash").toString();
             String nameProfile = profile.get("name").toString();
             String goalProfile = profile.get("general_goal").toString();
@@ -181,7 +181,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Holder> {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ProfileDetailActivity.class);
-                    intent.putExtra(TNUtil.KEY_IDPROFILE, String.valueOf(id_user));
+                    intent.putExtra(TNUtil.KEY_IDPROFILE, String.valueOf(idProfile));
                     context.startActivity(intent);
                 }
             });

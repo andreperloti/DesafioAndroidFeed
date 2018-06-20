@@ -18,9 +18,6 @@ public class ApplicationManager extends Application {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
         ApplicationUtil.setContext(getApplicationContext());
-
         Realm.init(getApplicationContext());
-
-
     }
 }

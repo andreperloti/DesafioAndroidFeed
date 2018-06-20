@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.internal.LinkedTreeMap;
 import com.squareup.picasso.Picasso;
@@ -48,10 +47,10 @@ public class ProfileDetailActivity extends AppCompatActivity {
     @BindView(R.id.recyclerview_meals)
     RecyclerView recyclerView;
 
-    private String id_profile;
-    LinkedTreeMap linkedTreeMapProfile = new LinkedTreeMap();
+    private String idProfile;
+    private LinkedTreeMap linkedTreeMapProfile = new LinkedTreeMap();
     private ProfileDetailAdapter adapter;
-    private CallbackRequestTN cb;
+    private CallbackRequestTN callbackRequestTN;
     private AdsRemoteManager adsRemoteManager;
 
     @Override
@@ -73,7 +72,7 @@ public class ProfileDetailActivity extends AppCompatActivity {
 
 
     private void setupCallbackRequest() {
-        cb = new CallbackRequestUtil(this, new CallbackRequestUtil.MyListener() {
+        callbackRequestTN = new CallbackRequestUtil(this, new CallbackRequestUtil.MyListener() {
            @Override
            public void onClick() {
                downloadProfile();
@@ -84,7 +83,7 @@ public class ProfileDetailActivity extends AppCompatActivity {
     private void initIdProfile() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            id_profile = extras.getString(TNUtil.KEY_IDPROFILE);
+            idProfile = extras.getString(TNUtil.KEY_IDPROFILE);
         }
     }
 
@@ -115,7 +114,7 @@ public class ProfileDetailActivity extends AppCompatActivity {
 
     private void downloadProfile() {
         setRefreshing(true);
-        ClienteAPI.MyRetrofit.getInstance().getProfile(id_profile)
+        ClienteAPI.MyRetrofit.getInstance().getProfile(idProfile)
                 .enqueue(new Callback<LinkedTreeMap>() {
                     @Override
                     public void onResponse(Call<LinkedTreeMap> call, Response<LinkedTreeMap> response) {
@@ -125,12 +124,12 @@ public class ProfileDetailActivity extends AppCompatActivity {
                             linkedTreeMapProfile = response.body();
                             if (linkedTreeMapProfile != null && !linkedTreeMapProfile.isEmpty()){
                                 onUpdate();
-                                cb.success();
+                                callbackRequestTN.success();
                             } else {
-                                cb.empty();
+                                callbackRequestTN.empty();
                             }
                         } else {
-                            cb.error();
+                            callbackRequestTN.error();
                         }
 
                         setRefreshing(false);
@@ -185,7 +184,7 @@ public class ProfileDetailActivity extends AppCompatActivity {
         long p = JsonUtil.getLong(linkedTreeMapProfile, "p", 0);
         p++;
         long t = JsonUtil.getLong(linkedTreeMapProfile, "t", 0);
-        ClienteAPI.MyRetrofit.getInstance().getProfile(id_profile, String.valueOf(p), String.valueOf(t))
+        ClienteAPI.MyRetrofit.getInstance().getProfile(idProfile, String.valueOf(p), String.valueOf(t))
                 .enqueue(new Callback<LinkedTreeMap>() {
                     @Override
                     public void onResponse(Call<LinkedTreeMap> call, Response<LinkedTreeMap> response) {

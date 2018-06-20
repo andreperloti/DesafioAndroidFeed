@@ -75,10 +75,10 @@ public class FeedDetailActivity extends AppCompatActivity {
     @BindView(R.id.view)
     RelativeLayout rlayout;
 
-    private String feed_hash;
+    private String feedHash;
     private LinkedTreeMap linkedTreeMapDetail = new LinkedTreeMap();
     private DetailFeedAdapter adapter;
-    private CallbackRequestTN cb;
+    private CallbackRequestTN callbackRequestTN;
     private AdsRemoteManager adsRemoteManager;
 
     @Override
@@ -101,7 +101,7 @@ public class FeedDetailActivity extends AppCompatActivity {
 
 
     private void setupCallbackRequest() {
-        cb = new CallbackRequestUtil(this, new CallbackRequestUtil.MyListener() {
+        callbackRequestTN = new CallbackRequestUtil(this, new CallbackRequestUtil.MyListener() {
             @Override
             public void onClick() {
                 downloadDetail();
@@ -110,7 +110,7 @@ public class FeedDetailActivity extends AppCompatActivity {
     }
 
     private void bindViewLike() {
-        Like likeByHash = LikeRepository.getLikeByHash(feed_hash);
+        Like likeByHash = LikeRepository.getLikeByHash(feedHash);
         if (likeByHash == null) {
             imageViewLike.setImageResource(R.drawable.heart_off);
         } else {
@@ -120,13 +120,13 @@ public class FeedDetailActivity extends AppCompatActivity {
         viewClickLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Like likeByHash = LikeRepository.getLikeByHash(feed_hash);
+                Like likeByHash = LikeRepository.getLikeByHash(feedHash);
                 if (likeByHash == null) {
                     imageViewLike.setImageResource(R.drawable.heart);
-                    LikeRepository.saveInCache(new Like(feed_hash));
+                    LikeRepository.saveInCache(new Like(feedHash));
                 } else {
                     imageViewLike.setImageResource(R.drawable.heart_off);
-                    LikeRepository.removeFromCache(feed_hash);
+                    LikeRepository.removeFromCache(feedHash);
                 }
             }
         });
@@ -135,7 +135,7 @@ public class FeedDetailActivity extends AppCompatActivity {
     private void initFeedHash() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            feed_hash = extras.getString(TNUtil.KEY_FEEDHASH);
+            feedHash = extras.getString(TNUtil.KEY_FEEDHASH);
         }
     }
 
@@ -169,7 +169,7 @@ public class FeedDetailActivity extends AppCompatActivity {
 
     private void downloadDetail() {
         setRefreshing(true);
-        ClienteAPI.MyRetrofit.getInstance().getDetailPost(feed_hash)
+        ClienteAPI.MyRetrofit.getInstance().getDetailPost(feedHash)
                 .enqueue(new Callback<LinkedTreeMap>() {
                     @Override
                     public void onResponse(Call<LinkedTreeMap> call, Response<LinkedTreeMap> response) {
@@ -180,12 +180,12 @@ public class FeedDetailActivity extends AppCompatActivity {
                             linkedTreeMapDetail = JsonUtil.getObject(body, "item");
                             if (linkedTreeMapDetail != null && !linkedTreeMapDetail.isEmpty()) {
                                 onUpdate();
-                                cb.success();
+                                callbackRequestTN.success();
                             } else {
-                                cb.empty();
+                                callbackRequestTN.empty();
                             }
                         } else {
-                            cb.error();
+                            callbackRequestTN.error();
                         }
                         setRefreshing(false);
                     }
@@ -193,7 +193,7 @@ public class FeedDetailActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<LinkedTreeMap> call, Throwable t) {
                         Log.e(TNUtil.TNREQUEST, "Error GET DETAIL FEED");
-                        cb.error();
+                        callbackRequestTN.error();
                         setRefreshing(false);
                     }
                 });
@@ -214,12 +214,12 @@ public class FeedDetailActivity extends AppCompatActivity {
                     .into(imageViewProfile);
         }
 
-        final int id_user = JsonUtil.getInt(profile, "id", 0);
+        final int idProfile = JsonUtil.getInt(profile, "id", 0);
         imageViewProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(FeedDetailActivity.this, ProfileDetailActivity.class);
-                intent.putExtra("ID_PROFILE", String.valueOf(id_user));
+                intent.putExtra(TNUtil.KEY_IDPROFILE, String.valueOf(idProfile));
                 startActivity(intent);
             }
         });

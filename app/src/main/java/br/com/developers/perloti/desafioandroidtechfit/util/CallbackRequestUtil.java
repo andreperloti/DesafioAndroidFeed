@@ -15,10 +15,10 @@ import br.com.developers.perloti.desafioandroidtechfit.R;
 
 public class CallbackRequestUtil {
 
-    View viewLoading;
-    View viewEE;
-    Button buttonEE;
-    TextView textViewEE;
+    private View viewLoading;
+    private View viewEE;
+    private Button buttonEE;
+    private TextView textViewEE;
 
     private MyListener myListener;
 

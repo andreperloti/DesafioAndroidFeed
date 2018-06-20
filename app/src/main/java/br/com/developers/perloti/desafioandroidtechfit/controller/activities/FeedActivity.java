@@ -49,7 +49,7 @@ public class FeedActivity extends AppCompatActivity {
 
     private LinkedTreeMap linkedTreeMapFeed = new LinkedTreeMap();
     private FeedAdapter adapter;
-    private CallbackRequestTN cb;
+    private CallbackRequestTN callbackRequestTN;
     private AdsRemoteManager adsRemoteManager;
 
     @Override
@@ -77,7 +77,7 @@ public class FeedActivity extends AppCompatActivity {
 
 
     private void setupCallbackRequest() {
-        cb = new CallbackRequestUtil(this, new CallbackRequestUtil.MyListener() {
+        callbackRequestTN = new CallbackRequestUtil(this, new CallbackRequestUtil.MyListener() {
             @Override
             public void onClick() {
                 downloadFeed();
@@ -132,12 +132,12 @@ public class FeedActivity extends AppCompatActivity {
                             linkedTreeMapFeed = response.body();
                             if (linkedTreeMapFeed != null && !linkedTreeMapFeed.isEmpty()) {
                                 onUpdate();
-                                cb.success();
+                                callbackRequestTN.success();
                             } else {
-                                cb.empty();
+                                callbackRequestTN.empty();
                             }
                         } else {
-                            cb.error();
+                            callbackRequestTN.error();
                         }
                         setRefreshing(false);
                     }
@@ -145,7 +145,7 @@ public class FeedActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<LinkedTreeMap> call, Throwable t) {
                         Log.e(TNUtil.TNREQUEST, "Error GET FEED");
-                        cb.error();
+                        callbackRequestTN.error();
                         setRefreshing(false);
                     }
                 });
